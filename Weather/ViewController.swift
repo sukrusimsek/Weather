@@ -119,7 +119,7 @@ extension ViewController{
     }
     @objc func getData() {
         //1.Create URL
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&appid=87de7504b5292a842a4dd070b053577c&units=metric&q=Ankara")
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&appid=87de7504b5292a842a4dd070b053577c&units=metric&lang=tr&q=Manisa")
         
         //2.Create a URLSession
         let session = URLSession.shared
@@ -136,13 +136,13 @@ extension ViewController{
                         DispatchQueue.main.async {
                             if let main = jsonResponse!["main"] as? [String:Any] {
                                 if let temp = main["temp"] as? Double {
-                                    self.temperatureLabel.text = String(temp)
+                                    self.temperatureLabel.text = String(Int(temp))
                                 }
                                 
                             }
                             if let name = jsonResponse!["name"] as? String {
                                     self.cityLabel.text = String(name)
-
+                                    
                                 }
                             }
                         
@@ -162,3 +162,18 @@ extension ViewController{
 
     
 
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if searchTextField.text != "" {
+            return true
+        } else {
+            searchTextField.placeholder = "Type something"
+            return false
+        }
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let city = searchTextField.text {
+            
+        }
+    }
+}
